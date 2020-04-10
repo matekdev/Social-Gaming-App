@@ -1,0 +1,66 @@
+{
+  "Default Port": 4000,
+  "HTML Location": "socialapp.html",
+  "Game Location": "Games",
+  "Commands Configuration": {
+    "Prefix Symbol": "/",
+    "Command List": [
+      {
+        "Type": "DISCONNECT",
+        "User Commands": [
+          "disconnect"
+        ],
+        "Description": " /disconnect: Disconnects from the server."
+      },
+      {
+        "Type": "SHUTDOWN",
+        "User Commands": [
+          "shutdown"
+        ],
+        "Description": " /shutdown X: Shuts down the provided game session X if you are the owner."
+      },
+      {
+        "Type": "START_GAME",
+        "User Commands": [
+          "startgame"
+        ],
+        "Description": " /startgame X: Starts the game within the provided game session X."
+      },
+      {
+        "Type": "CREATE_SESSION",
+        "User Commands": [
+          "createsession"
+        ],
+        "Description": " /createsession: Creates a new session given a game and a game json and returns the invitation code."
+      },
+      {
+        "Type": "JOIN_SESSION",
+        "User Commands": [
+          "joinsession"
+        ],
+        "Description": " /joinsession X: Joins a game session with the provided invitation code X."
+      },
+      {
+        "Type": "LEAVE_SESSION",
+        "User Commands": [
+          "leavesession"
+        ],
+        "Description": " /leavesession: Leaves your current game session if you are in one."
+      },
+      {
+        "Type": "USERNAME",
+        "User Commands": [
+          "setname"
+        ],
+        "Description": " /setname X: Changes your current username to X."
+      },
+      {
+        "Type": "HELP",
+        "User Commands": [
+          "help"
+        ],
+        "Description": " /help: Provides a list of valid commands."
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "configuration": {
+    "name": "GlobalMessageTest",
+    "player count": {"min": 2, "max": 4},
+    "audience": false,
+    "setup": {
+      "Rounds": 10
+    }
+  },
+
+  "constants": {
+    "weapons": [
+      { "name": "Rock",     "beats": "Scissors"},
+      { "name": "Paper",    "beats": "Rock"},
+      { "name": "Scissors", "beats": "Paper"}
+    ],
+    "test" : {
+      "name" : "John",
+      "age": 9,
+      "isHappy" : true,
+      "interests" : ["Hiking", "Karate", "Dogs"]
+    }
+  },
+
+  "variables": {
+    "TestInt1": 11,
+    "TestInt2": 22
+  },
+
+  "per-player": {
+    "wins": 0
+  },
+
+  "per-audience": {},
+
+  "rules": [
+    {
+      "rule": "global-message",
+      "value": "Name: {test.name}"
+    },
+    {
+      "rule": "global-message",
+      "value": "Age: {test.age}"
+    },
+    {
+      "rule": "global-message",
+      "value": "isHappy: {test.isHappy}"
+    },
+    {
+      "rule": "global-message",
+      "value": "Interests: {test.interests}"
+    },
+    {
+      "rule": "global-message",
+      "value": "Player Wins: {players.wins}"
+    },
+    {
+      "rule": "global-message",
+      "value": "Players in game: {players.name}"
+    },
+    {
+      "rule": "add",
+      "to": "TestInt1",
+      "value": 5
+    },
+    {
+      "rule": "add",
+      "to": "TestInt1",
+      "value": "TestInt2"
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+  <meta charset="utf-8" />
+  <title>Social Gaming - Donair</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <style>
+    html * {
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+    }
+
+    body, input, select, textarea {
+      background: #161616;
+      color: #ffffff;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #242d33;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #42a5f5;
+      border: 1px solid black;
+      border-radius: 4px;
+    }
+
+    #messages {
+        width: 100%;
+        color: white;
+        margin-bottom: 5px;
+        overflow-y: auto;
+    }
+
+    .btn:focus, .btn:active:focus, .btn.active:focus{
+        outline:none;
+        box-shadow:none;
+    }
+
+    #messageBox {
+      display:flex;
+      flex-direction: row;
+    }
+
+    #sendMessage {
+      flex-grow: 1;
+    }
+
+    .message {
+      margin: 8px 8px 8px 0;
+      background-color: #343a40;
+      padding: 8px;
+      border-radius: 8px;
+      clear: both;
+      float: left;
+      font-size: 14px;
+    }
+
+    .nameTag {
+      font-weight:bold;
+    }
+
+    .maxWidth {
+      max-width: 1000px;
+    }
+
+    #flexBody {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #messagesContainer {
+      flex: 1 1 auto;
+      overflow-y: auto;
+    }
+  </style>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+  
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".btn").mouseup(function(){
+        $(this).blur();
+      });
+
+      function appendText(text) {
+        let messages = $('#messages');
+        messages.append(text);
+
+        $("#messagesContainer").scrollTop($("#messagesContainer")[0].scrollHeight);
+      }
+
+      function hashName(name) {
+        let hash = 0;
+        for (i = 0; i < name.length; ++i) {
+          hash += name.charCodeAt(i);
+        }
+        return hash;
+      }
+
+      function getNameColourTag(name) {
+        let dom = $.parseHTML("<span class='nameTag'>" + name + "</span>");
+        $(dom).css('color', 'hsl('+ hashName(name) +', 100%, 75%');
+        return dom;
+      }
+
+      let ws = null;
+      const uriPieces = window.location.href.split('/');
+      const wsLocation = 'ws://' + uriPieces[2];
+      let connected = false;
+      $('#uri:text').val(wsLocation);
+      
+      $('#connect').click(function() {
+        if (connected){
+          return;
+        }
+        ws = new WebSocket(uri.value);
+        ws.onopen = function(ev) {
+          connected = true;
+          appendText("<div class='message'>Connected!\n</div>");
+        };
+        ws.onclose = function(ev) {
+          connected = false;
+          appendText("<div class='message'>Disconnected!\n</div>");
+        };
+        ws.onmessage = function(ev) {
+          let name = ev.data.substring(0, ev.data.indexOf(":"));
+          let message = ev.data.replace(name, "");
+
+          let nameDom = getNameColourTag(name);
+          message = "<div class='message'>" + nameDom[0].outerHTML + message + "\n</div>";
+
+          appendText(message);
+        };
+        ws.onerror = function(ev) {
+          appendText("<div class='message'>[error]\n</div>");
+        };
+      });
+
+      $('#disconnect').click(function () {
+        ws.close();
+      });
+
+      $('#send').click(function () {
+        ws.send(sendMessage.value);
+        sendMessage.value = "";
+      });
+
+      $('#sendMessage').keyup(function(e) {
+        e.preventDefault();
+        if (e.keyCode === 13) {
+          $('#send').click();
+        }
+      });
+    });
+  </script>
+</head>
+<body class="h-100" id="flexBody">
+  <nav class="navbar navbar-dark bg-dark mb-3">
+    <span class="navbar-brand">Social Gaming - Donair</span>
+  </nav>
+  <div class="container-fluid maxWidth" id="connectionInput">
+    <div class="input-group input-group-sm mb-3">
+      <input type="text" class="form-control" id="uri" placeholder="Social Gaming Server IP">
+      <div class="input-group-append">
+        <button class="btn btn-success" type="button" id="connect">Connect</button>
+        <button class="btn btn-danger" type="button" id="disconnect">Disconnect</button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid maxWidth" id="messagesContainer">
+    <pre id="messages"></pre>
+  </div>
+  <div class="container-fluid maxWidth">
+      <div class="input-group mt-3 mb-1" id="messageBox">
+        <input type="text" class="form-control" id="sendMessage" placeholder="Enter Message" value="" />
+        <div class="input-group-append">
+          <button type="button" class="btn btn-primary" id="send">Send</button >
+        </div>
+      </div>
+      <br />
+  </div>
+</body>
+</html>

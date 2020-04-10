@@ -1,0 +1,36 @@
+{
+  "configuration": {
+    "name": "Test",
+    "player count": {"min": 2, "max": 4},
+    "audience": false,
+    "setup": {
+      "Rounds": 10
+    }
+  },
+
+  "constants": {
+    "weapons": [
+      { "name": "Rock",     "beats": "Scissors"},
+      { "name": "Paper",    "beats": "Rock"},
+      { "name": "Scissors", "beats": "Paper"}
+    ]
+  },
+
+  "variables": {
+    "TestInt": 11
+  },
+
+  "per-player": {
+    "wins": 0
+  },
+
+  "per-audience": {},
+
+  "rules": [
+    {
+      "rule": "add",
+      "to": 2,
+      "value": "TestInt"
+    }
+  ]
+}

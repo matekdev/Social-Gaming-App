@@ -1,0 +1,88 @@
+{
+  "configuration": {
+    "name": "RuleShowcase",
+    "player count": {"min": 2, "max": 4},
+    "audience": false,
+    "setup": {
+      "Rounds": 10
+    }
+  },
+
+  "constants": {
+    "weapons": [
+      { "name": "Rock",     "beats": "Scissors"},
+      { "name": "Paper",    "beats": "Rock"},
+      { "name": "Scissors", "beats": "Paper"}
+    ]
+  },
+
+  "variables": {
+    "TestInt1": 11,
+    "TestInt2": 22,
+    "winners": []
+  },
+
+  "per-player": {
+    "wins": 0,
+    "loss": 1
+  },
+
+  "per-audience": {},
+
+  "rules": [
+    {
+      "rule": "global-message",
+      "value": "This .json showcases some of the rules we have implemented."
+    },
+    {
+      "rule": "global-message",
+      "value": "Some of these rules don't actively print to the screen..."
+    },
+    {
+      "rule": "global-message",
+      "value": "You can check out the rules we have managed to implement inside of /src/GameSpec/..."
+    },
+    {
+      "rule": "global-message",
+      "value": "This is a score rule that prints out the value for each user"
+    },
+    {
+      "rule": "scores",
+      "score": "wins",
+      "ascending": "false"
+    },
+    {
+      "rule": "scores",
+      "score": "lost",
+      "ascending": "true"
+    },
+    {
+      "rule": "add",
+      "to": "TestInt1",
+      "value": 5
+    },
+    {
+      "rule": "when",
+      "cases": [
+          {
+            "condition": "winners.size == 0",
+            "rules": [
+                {
+                  "rule": "global-message",
+                  "value": "Winners size is 0. Equality evaluation works!!!"
+                }
+            ]
+          },
+          {
+            "condition": "!(winners.size == players.size)",
+            "rules": [
+                {
+                  "rule": "global-message",
+                  "value": "winners not the same size as players. Negation and equality evaluation works!!!"
+                }
+            ]
+          }
+      ]
+    }
+  ]
+}

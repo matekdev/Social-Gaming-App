@@ -1,0 +1,36 @@
+{
+  "configuration": {
+    "name": "Hello world",
+    "player count": {"min": 2, "max": 4},
+    "audience": false,
+    "setup": {
+      "Rounds": 10
+    }
+  },
+
+  "constants": {
+    "weapons": [
+      { "name": "Rock",     "beats": "Scissors"},
+      { "name": "Paper",    "beats": "Rock"},
+      { "name": "Scissors", "beats": "Paper"}
+    ]
+  },
+
+  "variables": {
+    "TestInt1": 11,
+    "TestInt2": 22
+  },
+
+  "per-player": {
+    "wins": 0
+  },
+
+  "per-audience": {},
+
+  "rules": [
+    {
+      "rule": "global-message",
+      "value": "Hello world!"
+    }
+  ]
+}

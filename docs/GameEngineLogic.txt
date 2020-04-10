@@ -1,0 +1,37 @@
+server tick = game tick
+
+method tick():
+	returns: list of messages
+	parameter: none
+	precondition: game state is up to date with the latest user messages
+	
+method process():
+	returns: list of messages
+	parameter: game's current internal state
+	
+
+Description:	
+	i) Every tick() game engine will step down one rule or modify sleep timer if game is waiting for input 	
+	ii) the tick method will get a list of all the messages sent into the game engine by players and modify the game's internal state
+	iii) afterwards (still during the tick); depending on the rule, which reads and modifies the game's internal state and returns a list of response to be sent (may be empty)
+	iv) messages (if there are any) will be propagated back up and sent by the server to the clients 
+
+
+Example:
+	in gameServerUpdate(): processMessages will send the user messages into the GameSession
+		in GameSession (if "lobby" phase) : stores the messages to be broadcasted later
+		in GameSession (if "game" phase): translate the user messages into the approprate changes to the current game state -- translation may be delegated to game engine
+		end
+
+	in gameServerUpdate(): calls update() for every game session the server is hosting 
+		in update() if("lobby" phase): returns a list of the broadcasted messages (cross-product of all the players in lobby and all the messages)
+		in update() if("game" phase): excecutes the next rule based on the process() method giving it the current game state	//probably a class to store the game state
+			in process(): takes and alters the current game state based on whatever current rule it is processing (will require inheritance for the virtual process() method)	// this will be the main heavy lifting -- may not even need a GameEngine class if we're smart about how to implement the GameSpec
+				OR finds out which type of rule the current rule is, and based upon switch statement (alternative which handles the rule directly)	//this will be the main heavy lifting -- should be in a separate Game Engine class b/c of the huge switch statement							
+			in process(): steps forward in the rules object and stores the next rule for the next round of processing
+			in process(): returns a list of messages to be sent -- if there are any
+			end
+		returns list of messages to be sent -- if there are any
+		end
+
+	in gameServerUpdate(): concatenates the game messages with all the other messages and sends them in bulk to the networking library to be sent back to the client
