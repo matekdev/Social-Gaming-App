@@ -12,7 +12,7 @@ With the invitation code provided from using the `/createsession` command; you c
 
 ![img](https://i.gyazo.com/662e589822025a67eb421f20e479c960.png)
 
-Lastly, you can start the game by using the `/startgame` command. This starts the game and now is able to be played by all users within the lobby. The example game below prints out variables stored within our custom .json scripting language to all users within the game.
+Lastly, you can start the game by using the `/startgame` command. This starts the game and now is able to be played by all users within the lobby. The example game below prints out variables stored within our "game" to all users within the game.
 
 ![img](https://i.gyazo.com/62e57adc227d9f7db4029f48165ad295.png)
 
