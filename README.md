@@ -30,6 +30,7 @@ Lastly, you can start the game by using the `/startgame` command. This starts th
 - ## Building
 
   - Download the repository, extract the folder to a location you have access to
+  - You may have to fetch the submodules for the `GoogleTest` and `nlohmannjson` libraries
 
   - Create a build folder
 
